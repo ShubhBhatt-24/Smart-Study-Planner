@@ -146,63 +146,7 @@ class StudyPlanner {
         for (Task t : ordered) plan.unscheduled += t.remaining;
         return plan;
     }
-    bool saveData() const {
-        // Temporary file prevents overwriting a good save with partial data.
-        ofstream out(fileName + ".tmp");
-        if (!out) return false;
-        out << "AVENGERS_V2\n";
-        out << nextId << ' ' << dailyHours << ' ' << missedToday << ' '
-            << currentDay << ' ' << tasks.size() << '\n';
-        for (Task t : tasks)
-            out << t.id << ' ' << t.importance << ' ' << t.deadline << ' '
-                << t.remaining << ' ' << quoted(t.name) << '\n';
-        out.close();
-        if (!out) return false;
-        // Rename with a backup so a failed rename does not destroy old data.
-        remove("planner_data.txt.bak");
-        rename(fileName.c_str(), "planner_data.txt.bak");
-        if (rename((fileName + ".tmp").c_str(), fileName.c_str()) != 0) {
-            rename("planner_data.txt.bak", fileName.c_str());
-            return false;
-        }
-        remove("planner_data.txt.bak");
-        return true;
-    }
 
-    bool loadData() {
-        ifstream in(fileName);
-        if (!in) return false;
-        string header;
-        if (!(in >> header) || header != "AVENGERS_V2") return false;
-        int newId, newDaily, newMissed, newDay, count;
-        if (!(in >> newId >> newDaily >> newMissed >> newDay >> count)) return false;
-        if (newId < 1 || newDaily < 1 || newDaily > 24 || newMissed < 0 ||
-            newMissed > newDaily || newDay < 1 || count < 0 || count > 1000) return false;
-        vector<Task> loaded;
-        int highestId = 0;
-        for (int i = 0; i < count; i++) {
-            Task t;
-            if (!(in >> t.id >> t.importance >> t.deadline >> t.remaining >> quoted(t.name)))
-                return false;
-            if (t.id < 1 || t.importance < 1 || t.importance > 3 ||
-                t.deadline < 0 || t.deadline > 365 || t.remaining < 0 ||
-                t.remaining > 10000 || t.name.empty() || t.name.size() > 70) return false;
-            for (Task previous : loaded) if (previous.id == t.id) return false;
-            highestId = max(highestId, t.id);
-            loaded.push_back(t);
-        }
-        if (newId <= highestId) return false;
-        tasks = loaded;
-        nextId = newId;
-        dailyHours = newDaily;
-        missedToday = newMissed;
-        currentDay = newDay;
-        return true;
-    }
-
-    void changed() const {
-        if (!saveData()) cout << "WARNING: Could not save changes to disk.\n";
-    }
     bool saveData() const {
         // Temporary file prevents overwriting a good save with partial data.
         ofstream out(fileName + ".tmp");
