@@ -92,7 +92,7 @@ Example `GET /api/state` returns tasks, priority order, conflicts, timetable and
 ```bash
 python tests/test_web.py
 ```
-
+What-if note: The simulator tests a scenario without changing saved tasks.
 Test runner builds the server, uses a temporary working directory, and checks the actual HTTP/C++ integration. It requires Python 3 and G++.
 
 ## Contributors
