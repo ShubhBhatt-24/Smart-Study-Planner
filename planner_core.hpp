@@ -317,7 +317,7 @@ public:
         cout << "Task removed.\n";
     }
     void nextDay() {
-        // Start a new session. Yesterday's missed hours no longer apply.
+        // Start a new session. Yesterday's missed hours no longer apply
         // Remaining hours do not change automatically: user records actual progress.
         for (Task& t : tasks) if (t.deadline > 0) t.deadline--;
         currentDay++;
