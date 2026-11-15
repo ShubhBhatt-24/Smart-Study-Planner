@@ -98,4 +98,4 @@ Test runner builds the server, uses a temporary working directory, and checks th
 ## Contributors
 
 See [CONTRIBUTORS.md](CONTRIBUTORS.md). Each member should create their **own real commits** through their GitHub account; listing names alone will not generate GitHub attribution.
-Scheduling note: The Max-Heap ranks tasks by urgency.
+Scheduling note: The Max-Heap ranks tasks by urgency. 
