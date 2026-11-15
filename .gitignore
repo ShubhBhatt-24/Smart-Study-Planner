@@ -1,0 +1,10 @@
+# Compiled executables and local study data
+*.exe
+*.o
+*.obj
+planner_data.txt
+planner_data.txt.tmp
+planner_data.txt.bak
+__pycache__/
+.DS_Store
+.vscode/
