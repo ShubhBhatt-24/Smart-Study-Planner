@@ -14,38 +14,6 @@ using namespace std;
 // TEAM AVENGERS - SMART STUDY PLANNER - FINAL PBL
 // C++17. Algorithms are written manually for DSA learning.
 // A day means one study session; all hours and deadlines are integers.
-
-struct Task {
-    int id, importance, deadline, remaining;
-    string name;
-
-    int urgency() const {
-        int points = 10;
-        if (deadline <= 1) points = 50;
-        else if (deadline <= 3) points = 30;
-        return importance * 20 + points + remaining;
-    }
-};
-
-class MaxHeap {
-    vector<Task> data;
-    bool higher(const Task& a, const Task& b) const {
-        if (a.urgency() != b.urgency()) return a.urgency() > b.urgency();
-        if (a.deadline != b.deadline) return a.deadline < b.deadline;
-        return a.id < b.id;
-    }
-public:
-    bool empty() const { return data.empty(); }
-    void insert(Task t) {
-        data.push_back(t);
-        int child = (int)data.size() - 1;
-        while (child > 0) {
-            int parent = (child - 1) / 2;
-            if (!higher(data[child], data[parent])) break;
-            swap(data[child], data[parent]);
-            child = parent;
-        }
-    }
     Task removeHighest() {
         Task answer = data[0]; // Call only when heap is not empty.
         data[0] = data.back();
